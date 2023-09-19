@@ -1,5 +1,6 @@
 {{ range .TestSuites }}{{ if .TestCases }}# Suite {{ .Name }}
 {{ range .TestCases }}
 ## Test {{ .Name }}
+
 Status:{{ if .Failure.Message }} Failed {{ else }} Passed {{ end }}
 {{ end }}{{ end }}{{ end }}
