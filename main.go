@@ -1,12 +1,15 @@
 package main
 
 import (
+	"embed"
 	"encoding/xml"
 	"os"
 	"text/template"
 )
 
-// Testsuites was generated 2023-09-19 12:11:27 by https://xml-to-go.github.io/ in Ukraine.
+//go:embed template.tmpl
+var tmplFile embed.FS
+
 type Testsuites struct {
 	XMLName    xml.Name `xml:"testsuites"`
 	Text       string   `xml:",chardata"`
@@ -36,13 +39,9 @@ type Testsuites struct {
 	} `xml:"testsuite"`
 }
 
-type files struct {
-}
-
 func main() {
 	argsWithoutProg := os.Args[1:]
-	var tmplFile = "template.tmpl"
-	tmpl, err := template.New(tmplFile).ParseFiles(tmplFile)
+	tmpl, err := template.New("template.tmpl").ParseFS(tmplFile, "*.tmpl")
 	if err != nil {
 		panic(err)
 	}
